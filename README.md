@@ -22,10 +22,10 @@ pip install requests
 ## Usage
 To use the tool, run the script with the following command-line arguments:
 
---github-user-or-org: GitHub username or organization name
---github-api-key: GitHub API token to access private repos
---number-of-projects: Number of projects for GitHub and Checkmarx
---checkmarx-api-key: JWT token for Checkmarx API
+* --github-user-or-org: GitHub username or organization name
+* --github-api-key: GitHub API token to access private repos
+* --number-of-projects: Number of projects for GitHub and Checkmarx
+* --checkmarx-api-key: JWT token for Checkmarx API
 
 ## Example
 ```sh
