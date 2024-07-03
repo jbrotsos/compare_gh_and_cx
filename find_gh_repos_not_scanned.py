@@ -2,6 +2,7 @@ import requests
 import json
 import argparse
 import sys
+import datetime
 
 def list_github_repositories(user_or_org, token, num_of_projects):
     """
@@ -162,24 +163,23 @@ def compare_lists(github_repositories, checkmarx_projects):
 
     return matches, non_matches
 
-def printlist (data, filename):
+def printlist (data, filename_prefix):
     """
-    Writes an array of dictionaries to a CSV file with the specified filename.
-    
-    The function extracts headers from the first dictionary in the array and writes them as the
-    first row in the CSV file. Each subsequent row in the CSV file corresponds to a dictionary
-    in the array, with values separated by commas.
+    Writes a list of data to a CSV file with a timestamp in the filename.
 
-    Args:
-        data (list of dict): An array of dictionaries where each dictionary represents a row.
-                             The keys of the dictionary are used as column headers.
-        filename (str): The name of the CSV file to write the data to.
+    Parameters:
+    data (list of dicts): A list of dictionaries to write to the CSV file.
+    filename_prefix (str): The prefix for the filename. The final filename will include this prefix and a timestamp.
 
-    Raises:
-        IOError: If an I/O error occurs during file operations.
-        IndexError: If the data array is empty, causing an attempt to access the first element.
+    Returns:
+    None
     """
     try:
+        # Get the current timestamp and format it
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        # Create the complete filename with the timestamp
+        filename = f"{filename_prefix}_{timestamp}.csv"
+        
         # Extract headers from the first dictionary in the array
         headers = list(data[0].keys())
 
@@ -218,5 +218,5 @@ if __name__ == "__main__":
 
     print (f"Percentage of GitHub repos covered {total_matches / total_repos * 100}%")
 
-    printlist (matches, 'output-found.csv')
-    printlist (non_matches, 'output-notfound.csv')
+    printlist (matches, 'output-found')
+    printlist (non_matches, 'output-notfound')
